@@ -6,16 +6,58 @@
 int test_strcpy();
 int test_strlen();
 int str_swap(char* str1, char* str2, int size);
+int test_string();
 
 int main()
 {
 	// printf("Hello World!\n");
 
 	// test_strlen();
-	test_strcpy();
+	// test_strcpy();
+	test_string();
 
 	return 0;
 }
+
+#define SIZE 128
+int test_string()
+{
+	char in_str[SIZE] = "";
+	char out_str[SIZE] = "";
+	char* pContext = NULL;
+
+	printf("Enter a string: ");
+	// gets_s(in_str, sizeof(in_str));
+	// fgets(in_str, sizeof(in_str), stdin); // stdin -- Keyboard file
+	//파일에서 읽기:
+
+	FILE* mycontact = fopen("C:/Users/user/Downloads/mycontact.txt", "r");
+	if (mycontact == NULL)
+	{
+		printf("Fail to open file\n");
+		return -1;
+	}
+
+	while (fgets(in_str, sizeof(in_str), mycontact) != NULL)
+	{
+		// (in_str, sizeof(in_str), stdin); // stdin -- keyboard file
+		puts(in_str);
+
+		char* pToken = strtok_s(in_str, "|,", &pContext);
+		if (pToken != NULL) puts(pToken);
+
+		pToken = strtok_s(NULL, "|,", &pContext);
+		if (pToken != NULL) puts(pToken);
+
+		pToken = strtok_s(NULL, "|,", &pContext);
+		if (pToken != NULL) puts(pToken);
+	}
+	
+	fclose(mycontact);
+
+	return 0;
+}
+
 #define STR_SIZE 128
 int test_strcpy()
 {
